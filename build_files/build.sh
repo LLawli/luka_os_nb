@@ -22,6 +22,7 @@ dnf5 install -y \
 
 ARCH="x86_64"
 INSTALL_DIR="/usr/local/bin"
+mkdir -p "$INSTALL_DIR"
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
