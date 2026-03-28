@@ -21,8 +21,7 @@ dnf5 install -y \
 # (not yet available in Fedora repos)
 
 ARCH="x86_64"
-INSTALL_DIR="/usr/local/bin"
-mkdir -p "$INSTALL_DIR"
+INSTALL_DIR="/usr/bin"
 TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
