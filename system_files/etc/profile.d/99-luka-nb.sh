@@ -34,6 +34,32 @@ if command -v fzf >/dev/null 2>&1 && command -v zoxide >/dev/null 2>&1; then
   }
 fi
 
+# ── dust: powers du ──────────────────────────────────────────────────────────
+if command -v dust >/dev/null 2>&1; then
+  alias du='dust'
+fi
+
+# ── procs: powers ps ─────────────────────────────────────────────────────────
+if command -v procs >/dev/null 2>&1; then
+  alias ps='procs'
+fi
+
+# ── xcp: powers cp ───────────────────────────────────────────────────────────
+if command -v xcp >/dev/null 2>&1; then
+  alias cp='xcp'
+fi
+
+# ── xh: powers http/https ────────────────────────────────────────────────────
+if command -v xh >/dev/null 2>&1; then
+  alias http='xh'
+  alias https='xh --https'
+fi
+
+# ── tldr: powers man ─────────────────────────────────────────────────────────
+if command -v tldr >/dev/null 2>&1; then
+  alias man='tldr'
+fi
+
 # ── extract: descompacta qualquer formato ────────────────────────────────────
 extract() {
   if [ -z "${1:-}" ]; then
