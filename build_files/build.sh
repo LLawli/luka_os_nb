@@ -66,11 +66,12 @@ curl -fsSL "https://github.com/ducaale/xh/releases/download/${XH_VER}/xh-${XH_VE
     | tar -xz -C "$TMPDIR"
 install -m755 "$TMPDIR/xh-${XH_VER}-${ARCH}-unknown-linux-musl/xh" "$INSTALL_DIR/xh"
 
-# xcp — cp with progress
+# xcp — cp with progress (tag has "xcp-" prefix, gnu only)
 XCP_VER=$(gh_latest "tarka/xcp")
-curl -fsSL "https://github.com/tarka/xcp/releases/download/${XCP_VER}/xcp-${XCP_VER}-${ARCH}-unknown-linux-musl.tar.gz" \
+XCP_VER_CLEAN="${XCP_VER#xcp-}"
+curl -fsSL "https://github.com/tarka/xcp/releases/download/${XCP_VER}/xcp-${XCP_VER_CLEAN}-${ARCH}-unknown-linux-gnu.tar.gz" \
     | tar -xz -C "$TMPDIR"
-install -m755 "$TMPDIR/xcp" "$INSTALL_DIR/xcp"
+install -m755 "$TMPDIR/xcp-${XCP_VER_CLEAN}-${ARCH}-unknown-linux-gnu/bin/xcp" "$INSTALL_DIR/xcp"
 
 # xsv — CSV toolkit
 XSV_VER=$(gh_latest "BurntSushi/xsv")
@@ -84,17 +85,18 @@ curl -fsSL "https://github.com/zellij-org/zellij/releases/download/${ZELLIJ_VER}
     | tar -xz -C "$TMPDIR"
 install -m755 "$TMPDIR/zellij" "$INSTALL_DIR/zellij"
 
-# pipr — interactive shell pipeline builder
+# pipr — interactive shell pipeline builder (single binary asset)
 PIPR_VER=$(gh_latest "elkowar/pipr")
-curl -fsSL "https://github.com/elkowar/pipr/releases/download/${PIPR_VER}/pipr-${ARCH}-unknown-linux-musl.tar.gz" \
-    | tar -xz -C "$TMPDIR"
+curl -fsSL "https://github.com/elkowar/pipr/releases/download/${PIPR_VER}/pipr" \
+    -o "$TMPDIR/pipr"
 install -m755 "$TMPDIR/pipr" "$INSTALL_DIR/pipr"
 
-# ripsecrets — secret scanner
+# ripsecrets — secret scanner (version without "v" prefix, gnu only)
 RIPSECRETS_VER=$(gh_latest "sirwart/ripsecrets")
-curl -fsSL "https://github.com/sirwart/ripsecrets/releases/download/${RIPSECRETS_VER}/ripsecrets-${ARCH}-unknown-linux-musl.tar.gz" \
+RIPSECRETS_VER_CLEAN="${RIPSECRETS_VER#v}"
+curl -fsSL "https://github.com/sirwart/ripsecrets/releases/download/${RIPSECRETS_VER}/ripsecrets-${RIPSECRETS_VER_CLEAN}-${ARCH}-unknown-linux-gnu.tar.gz" \
     | tar -xz -C "$TMPDIR"
-install -m755 "$TMPDIR/ripsecrets" "$INSTALL_DIR/ripsecrets"
+install -m755 "$TMPDIR/ripsecrets-${RIPSECRETS_VER_CLEAN}-${ARCH}-unknown-linux-gnu/ripsecrets" "$INSTALL_DIR/ripsecrets"
 
 ### Cleanup
 dnf5 clean all
