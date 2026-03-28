@@ -32,6 +32,7 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     /ctx/build.sh
     
 COPY system_files/etc /etc
+COPY system_files/usr /usr
 
 ### LINTING
 ## Verify final image and contents are correct.
