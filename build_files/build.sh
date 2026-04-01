@@ -15,7 +15,11 @@ dnf5 install -y \
     ripgrep \
     tealdeer \
     yq \
-    zoxide
+    zoxide \
+    zram-generator
+
+### Remove any disk-based swap inherited from base image
+sed -i '/[[:space:]]swap[[:space:]]/d' /etc/fstab 2>/dev/null || true
 
 ### Install tools from GitHub releases
 # (not yet available in Fedora repos)
