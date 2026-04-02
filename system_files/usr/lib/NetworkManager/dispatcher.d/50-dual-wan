@@ -1,0 +1,18 @@
+#!/bin/bash
+CONF="/etc/dual-wan.conf"
+[[ -f "$CONF" ]] || exit 0
+
+# shellcheck source=/dev/null
+source "$CONF"
+
+IFACE="$1"
+ACTION="$2"
+
+if [[ "$IFACE" == "$DL_IFACE" || "$IFACE" == "$UL_IFACE" ]]; then
+    case "$ACTION" in
+        up|down|connectivity-change)
+            logger -t "dual-wan-dispatch" "$IFACE $ACTION — reaplicando rotas"
+            /usr/local/bin/dual-wan.sh &
+            ;;
+    esac
+fi

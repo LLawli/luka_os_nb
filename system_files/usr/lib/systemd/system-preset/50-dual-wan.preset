@@ -1,0 +1,2 @@
+enable dual-wan.service
+enable dual-wan.timer

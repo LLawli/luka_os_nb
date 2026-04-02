@@ -1,0 +1,9 @@
+[Unit]
+Description=Verifica dual WAN a cada 30s
+
+[Timer]
+OnBootSec=15
+OnUnitActiveSec=30
+
+[Install]
+WantedBy=timers.target

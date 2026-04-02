@@ -1,0 +1,12 @@
+[Unit]
+Description=Dual WAN split routing (ethernet download + wifi upload)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dual-wan.sh
+SuccessExitStatus=0 1
+
+[Install]
+WantedBy=multi-user.target
