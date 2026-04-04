@@ -30,7 +30,9 @@ TMPDIR=$(mktemp -d)
 trap 'rm -rf "$TMPDIR"' EXIT
 
 gh_latest() {
-    curl -fsSL "https://api.github.com/repos/$1/releases/latest" \
+    local auth_header=()
+    [[ -n "${GITHUB_TOKEN:-}" ]] && auth_header=(-H "Authorization: Bearer ${GITHUB_TOKEN}")
+    curl -fsSL "${auth_header[@]}" "https://api.github.com/repos/$1/releases/latest" \
         | grep '"tag_name"' | head -1 | cut -d'"' -f4
 }
 
