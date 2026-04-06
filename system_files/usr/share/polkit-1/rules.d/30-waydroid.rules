@@ -1,0 +1,10 @@
+// Permite que membros do grupo wheel executem os scripts do Waydroid sem senha
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.policykit.exec" &&
+        subject.isInGroup("wheel") &&
+        (action.lookup("program") == "/usr/libexec/waydroid-container-start" ||
+         action.lookup("program") == "/usr/libexec/waydroid-container-stop" ||
+         action.lookup("program") == "/usr/libexec/waydroid-container-restart")) {
+        return polkit.Result.YES;
+    }
+});

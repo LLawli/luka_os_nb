@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Reiniciar Waydroid
+Name[en]=Force Restart Waydroid
+Comment=Reinicia o container do Waydroid
+Comment[en]=Force restart the Waydroid container
+Exec=pkexec /usr/libexec/waydroid-container-restart
+Icon=waydroid
+Terminal=false
+Type=Application
+Categories=System;
+Keywords=android;waydroid;restart;

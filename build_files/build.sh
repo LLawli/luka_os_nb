@@ -2,9 +2,14 @@
 
 set -ouex pipefail
 
+### Waydroid COPR (Android no Linux)
+curl -Lo /etc/yum.repos.d/waydroid.repo \
+    "https://copr.fedorainfracloud.org/coprs/aleasto/waydroid/repo/fedora-$(rpm -E %fedora)/aleasto-waydroid-fedora-$(rpm -E %fedora).repo"
+
 ### Install packages from repos
 
 dnf5 install -y \
+    waydroid \
     bat \
     btop \
     eza \
