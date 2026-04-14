@@ -88,16 +88,13 @@ setup-dual-wan:
     [[ "${CONFIRM,,}" == "n" ]] && echo "Cancelado." && exit 0
 
     # Gravar config
-    sudo tee /etc/dual-wan.conf > /dev/null << EOF
-# Gerado por ujust setup-dual-wan
-DL_IFACE="$DL_IFACE"
-DL_GW="$DL_GW"
-UL_IFACE="$UL_IFACE"
-UL_GW="$UL_GW"
-EOF
+    printf '# Gerado por ujust setup-dual-wan\nDL_IFACE="%s"\nDL_GW="%s"\nUL_IFACE="%s"\nUL_GW="%s"\n' \
+        "$DL_IFACE" "$DL_GW" "$UL_IFACE" "$UL_GW" | sudo tee /etc/dual-wan.conf > /dev/null
 
-    sudo systemctl enable --now dual-wan.service
-    sudo systemctl enable --now dual-wan.timer
+    sudo systemctl enable dual-wan.service
+    sudo systemctl start dual-wan.service
+    sudo systemctl enable dual-wan.timer
+    sudo systemctl start dual-wan.timer
 
     echo ""
     echo "Dual WAN ativo!"
@@ -111,7 +108,8 @@ disable-dual-wan:
     #!/usr/bin/bash
     set -euo pipefail
     echo "Desativando dual-WAN..."
-    sudo systemctl disable --now dual-wan.timer dual-wan.service || true
+    sudo systemctl stop dual-wan.timer dual-wan.service || true
+    sudo systemctl disable dual-wan.timer dual-wan.service || true
     sudo rm -f /etc/dual-wan.conf
     echo "Desativado. Reinicie para restaurar rotas padrão."
 
@@ -133,7 +131,7 @@ dual-wan-status:
     cat /etc/dual-wan.conf 2>/dev/null || echo "(não configurado — execute: ujust setup-dual-wan)"
     echo ""
     echo "=== Serviços ==="
-    systemctl status dual-wan.service dual-wan.timer --no-pager || true
+    SYSTEMD_PAGER="" systemctl status dual-wan.service dual-wan.timer || true
     echo ""
     echo "=== Regras de rota ==="
     ip rule show

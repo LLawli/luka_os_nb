@@ -27,7 +27,8 @@ setup-waydroid ACTION="":
     fi
 
     if [[ "${OPTION,,}" =~ ^init ]]; then
-        sudo systemctl enable --now waydroid-container
+        sudo systemctl enable waydroid-container
+        sudo systemctl start waydroid-container
         echo "Inicializando o Waydroid, aguarde..."
         sudo waydroid init -c 'https://ota.waydro.id/system' -v 'https://ota.waydro.id/vendor'
         sudo restorecon -R /var/lib/waydroid
